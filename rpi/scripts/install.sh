@@ -27,7 +27,8 @@ if [ $(id -u) -gt 0 ]; then
     exit
 fi
 
-apt-get install udhcpd
+apt-get install udhcpd \
+    ffplay supervisor
 
 # Configure udhcpd
 copy_conf etc/udhcpd.conf
@@ -35,4 +36,7 @@ sed -i -e "s/\[PI MAC ADDRESS\]/$MACADDR/" "$DESTDIR/etc/udhcpd.conf"
 systemctl enable udhcpd
 system restart udhcpd
 
-
+# Configure supervisor
+copy_conf etc/supervisor/conf.d/pimonitor.conf
+systemctl enable supervisor
+systemctl restart supervisor
