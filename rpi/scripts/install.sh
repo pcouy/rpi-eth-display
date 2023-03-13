@@ -12,9 +12,15 @@ copy_conf () {
         return -1
     fi
 
+    if [ $# -lt 2 ]; then
+        UMASK=644
+    else
+        UMASK=$2
+    fi
+
    rsync --mkpath -a "$SCRIPT_DIR/../fs/$1" "$DESTDIR/$1"
    chown root:root "$DESTDIR/$1"
-   chmod 644 "$DESTDIR/$1"
+   chmod $UMASK "$DESTDIR/$1"
 }
 
 if [[ ! " ${RPIPREFIXES[*]} " =~ " ${MACPREFIX} " ]]; then
@@ -28,13 +34,19 @@ if [ $(id -u) -gt 0 ]; then
 fi
 
 apt-get install udhcpd \
-    ffplay supervisor
+    ffplay supervisor \
+    tcpdump
 
 # Configure udhcpd
 copy_conf etc/udhcpd.conf
 sed -i -e "s/\[PI MAC ADDRESS\]/$MACADDR/" "$DESTDIR/etc/udhcpd.conf"
 systemctl enable udhcpd
 system restart udhcpd
+
+# Change VideoCore driver to allow turning the screen off
+copy_conf boot/config.txt 755
+# Script that determines if screen should be on or off
+copy_conf root/check_screen_input.sh 755
 
 # Configure supervisor
 copy_conf etc/supervisor/conf.d/pimonitor.conf
