@@ -52,3 +52,6 @@ copy_conf root/check_screen_input.sh 755
 copy_conf etc/supervisor/conf.d/pimonitor.conf
 systemctl enable supervisor
 systemctl restart supervisor
+
+# Ask to reboot
+echo 'Reboot (necessary for power management) ? (y/n)' && read x && [[ "$x" == "y" ]] && /sbin/reboot
