@@ -55,7 +55,7 @@ else
 
     # If there was a previously running ffmpeg process which we killed,
     # wait 5 seconds for the supervisor daemon on the Pi to restart ffplay
-    if [ $KILLEDFFMPEG ]; then
+    if [ $KILLEDFFMPEG -eq 0 ]; then
         sleep 5
     fi
 
