@@ -14,7 +14,9 @@ Here are the steps you should take to install everything.
 
 ### Raspberry Pi
 
-Flash an SD card with a Raspberry Pi OS image.
+Flash an SD card with a Raspberry Pi OS image. You can [download the latest versions from the official website](https://www.raspberrypi.com/software/operating-systems/) (I recommend using the "Lite" image as we won't need a graphical environment). You can follow [this tutorial about Raspberry Pi installation and initial configuration](https://www.raspberrypi.com/documentation/computers/getting-started.html) if needed.
+
+Alternatively, the install script and streaming should work on a Pi that's already used for something else, but there may be performance issues.
 
 You will need internet access for initial setup (to download the dependencies). I recommend using WiFi because you will need the eth interface available to connect it to the main computer. You can disable WiFi after everything is installed.
 
