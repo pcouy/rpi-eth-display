@@ -6,7 +6,7 @@ If you want to try installation scripts anyway, you must edit them both and chan
 
 # Using a Raspberry Pi to add a second HDMI port to a laptop
 
-This repository hosts configuration files from [the technical write-up on my blog](https://pierre-couy.dev/side-projects/2023/03/turning-rpi-into-external-monitor-driver.html).
+This repository hosts configuration files from [the technical write-up on my blog](https://pierre-couy.dev/tinkering/2023/03/turning-rpi-into-external-monitor-driver.html).
 
 Additionally, I tried to write install scripts for both the laptop and the Raspberry Pi. This should be the quickest way to get everything up and running. After installing all dependencies and configuration files, you should be able to get a low-latency stream with good quality from your main computer to the Raspberry Pi.
 
