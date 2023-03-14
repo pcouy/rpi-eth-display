@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# Enable job control
+set -m
+
+# Extract arguments between `--output VIRTUAL1` and the next occurence of `--output`
+V_ARGS=$(echo "$@" | grep "VIRTUAL1" | sed -e 's/.*--output VIRTUAL1 //' -e 's/ \?--output.*//')
+
+# Run the real xrandr (using the full path YOU MAY NEED TO UPDATE THIS DEPENDING ON YOUR DISTRO)
+/usr/bin/xrandr "$@"
+
+# If xrandr exited with an error, exit with the same exit code
+EXITCODE=$?
+if [ $(echo $V_ARGS | wc -w) -eq 0 ]; then
+    exit $EXITCODE
+fi
+
+# Kill the previous ffmpeg process if it exists
+kill $(cat /tmp/remote_screen_ffmpeg.pid)
+KILLEDFFMPEG=$?
+rm /tmp/remote_screen_ffmpeg.pid
+
+# If the arguments for the display contain `--off`
+if [ $(echo $V_ARGS | grep -e "--off" | wc -l) -ge 1 ]; then
+    echo "Screen off" >> ~/testxrandr # For debugging
+else
+    # Extract the arguments for the display we're interested in
+    MODE=$(echo $V_ARGS | sed -e 's/.*--mode \([^ ]*\).*/\1/')
+    POS=$(echo $V_ARGS | sed -e 's/.*--pos \([^ ]*\).*/\1/')
+    ROTATE=$(echo $V_ARGS | sed -e 's/.*--rotate \([^ ]*\).*/\1/')
+
+    # If the display is rotated, invert width and height in $MODE
+    if [[ $ROTATE == "left" ]] || [[ $ROTATE == "right" ]]; then
+        MODE=$(echo $MODE | sed -e 's/\([0-9]*\)x\([0-9]*\)/\2x\1/')
+    fi
+
+    # $VFARG will be used later in an ffmpeg option
+    case $ROTATE in
+        normal)
+            VFARG="null"
+            ;;
+        left)
+            VFARG="transpose=2"
+            ;;
+        right)
+            VFARG="transpose=1"
+            ;;
+        inverted)
+            VFARG="transpose=2,transpose=2"
+            ;;
+        *)
+            VFARG="null"
+            ;;
+    esac
+
+    # If there was a previously running ffmpeg process which we killed,
+    # wait 5 seconds for the supervisor daemon on the Pi to restart ffplay
+    if [ $KILLEDFFMPEG ]; then
+        sleep 5
+    fi
+
+    # ffmpeg command, the magic happens here
+    taskset -c 0 ffmpeg -nostdin -video_size $MODE -r 30 -framerate 30 -f x11grab -i :0.0+$POS -b:v 40M -maxrate 50M -minrate 1K -bufsize 200M -field_order tt -fflags nobuffer -threads 1 -vcodec mpeg4 -g 100 -r 30 -bf 0 -mbd bits -me_method full -flags +aic+mv4+low_delay -me_method full -thread_type slice -slices 1 -level 32 -strict experimental -f_strict experimental -syncpoints none -vf "$VFARG" -f nut -tcp_nodelay 1 "tcp://10.0.0.0:1234?tcp_nodelay=1" >/dev/null 2>&1 &
+
+    # Save the ffmpeg pid to a file which we'll read on next invocation
+    FFMPEGPID=$!
+    disown $FFMPEGPID
+    echo $FFMPEGPID > /tmp/remote_screen_ffmpeg.pid
+fi
+
+# Return the same exit code as xrandr did
+exit $EXITCODE
