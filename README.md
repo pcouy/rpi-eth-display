@@ -22,11 +22,21 @@ You will need internet access for initial setup (to download the dependencies). 
 
 Using either a keyboard or SSH, install git using `sudo apt-get install git` and clone the repository : `git clone https://github.com/pcouy/rpi-eth-display.git` 
 
-You can now run the install script using `rpi-eth-display/rpi/scripts/install.sh`
+You can now run the install script as root using `sudo rpi-eth-display/rpi/scripts/install.sh`. This script takes care of installing all dependencies on the Pi.
 
 ### Main computer
 
-Similarly, clone the repository on the computer you want to stream from, then run the install script : `rpi-eth-display/laptop/scripts/install.sh`. You will need to reboot your computer for the VIRUTAL1 screen to show-up. After rebooting, run the install script once again to configure the modeline for the virtual display. You will need to redo this step after every reboot.
+#### Requirements
+
+The scripts in this repository only work for a Linux computer using a X server. It should be easy to modify the `ffmpeg` command so it works on Wayland, Windows or MacOS. However, install scripts and wrappers need more work. If you want to work on this, please open an issue so I can link to your work here.
+
+Currently, the configuration included only works with intel CPUs with integrated graphics. From [Virtual Display Linux](https://github.com/dianariyanto/virtual-display-linux), there is an [alternative configuration file for Nvidia GPU](https://github.com/dianariyanto/virtual-display-linux/issues/9#issuecomment-786389065).
+
+If you're using a Linux computer running an X server with Intel integrated graphics, you are good to go. Just make sure the `ffmpeg` command is available and proceed to the next step.
+
+#### Installation
+
+Similarly, clone the repository on the computer you want to stream from, then run the install script (but this time as your regular user) : `rpi-eth-display/laptop/scripts/install.sh`. You will need to reboot your computer for the `VIRUTAL1` screen to show-up. After rebooting, run the install script once again to configure the modeline for the virtual display. You will need to redo this step after every reboot.
 
 ### Using it
 
