@@ -1,6 +1,8 @@
 # Warning : Work In Progress
 
-The installation scripts have not been properly tested yet. You should not run them (especially the laptop one) without reviewing them first.
+The installation scripts have not been properly tested yet. You should not run them (especially the laptop one) without reviewing them first. Files from `fs` directories should work fine, as they directly come from the setup I manually installed and use daily.
+
+If you want to try installation scripts anyway, you must edit them both and change `DESTDIR=fakeroot` to `DESTDIR=/` for the files to be copied on your live system. **Do this at your own risks.**
 
 # Using a Raspberry Pi to add a second HDMI port to a laptop
 
@@ -46,7 +48,7 @@ If you disabled WiFi on the Pi, you should still be able to SSH into it using th
 
 ## TODO
 
-- Change `$DESTDIR` in both install scripts
-- Turn the Pi part in a deb package
-- Grab the screen resolution from the Pi to auto-generate the modeline
+- Properly test install scripts and change `$DESTDIR` in both install scripts
+- Turn the Pi part into a deb package
 - Auto generation and setup of ssh keys to log into the Pi
+- Grab the screen resolution from the Pi to auto-generate the modeline
