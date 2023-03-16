@@ -44,7 +44,7 @@ Similarly, clone the repository on the computer you want to stream from, then ru
 
 If everything was setup correctly, you should be able to start a stream simply by enabling the `VIRTUAL1` display in `xrandr` or any of its GUI. The wrapper will auto-start `ffmpeg` using the right options.
 
-If you disabled WiFi on the Pi, you should still be able to SSH into it using the eth link. The Pi's IP address on this interface is `10.0.0.0`.
+If you disabled WiFi on the Pi, you should still be able to SSH into it using the eth link. The Pi's IP address on this interface is `10.0.0.1`.
 
 ## TODO
 

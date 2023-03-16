@@ -60,7 +60,7 @@ else
     fi
 
     # ffmpeg command, the magic happens here
-    taskset -c 0 ffmpeg -nostdin -video_size $MODE -r 30 -framerate 30 -f x11grab -i :0.0+$POS -b:v 40M -maxrate 50M -minrate 1K -bufsize 200M -field_order tt -fflags nobuffer -threads 1 -vcodec mpeg4 -g 100 -r 30 -bf 0 -mbd bits -me_method full -flags +aic+mv4+low_delay -me_method full -thread_type slice -slices 1 -level 32 -strict experimental -f_strict experimental -syncpoints none -vf "$VFARG" -f nut -tcp_nodelay 1 "tcp://10.0.0.0:1234?tcp_nodelay=1" >/dev/null 2>&1 &
+    taskset -c 0 ffmpeg -nostdin -video_size $MODE -r 30 -framerate 30 -f x11grab -i :0.0+$POS -b:v 40M -maxrate 50M -minrate 1K -bufsize 200M -field_order tt -fflags nobuffer -threads 1 -vcodec mpeg4 -g 100 -r 30 -bf 0 -mbd bits -me_method full -flags +aic+mv4+low_delay -me_method full -thread_type slice -slices 1 -level 32 -strict experimental -f_strict experimental -syncpoints none -vf "$VFARG" -f nut -tcp_nodelay 1 "tcp://10.0.0.1:1234?tcp_nodelay=1" >/dev/null 2>&1 &
 
     # Save the ffmpeg pid to a file which we'll read on next invocation
     FFMPEGPID=$!
