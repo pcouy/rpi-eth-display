@@ -34,7 +34,7 @@ if [ $(id -u) -gt 0 ]; then
 fi
 
 apt-get install udhcpd \
-    ffplay supervisor \
+    ffmpeg supervisor \
     tcpdump
 
 # Configure udhcpd
