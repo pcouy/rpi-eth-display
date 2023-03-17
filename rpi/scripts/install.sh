@@ -41,7 +41,7 @@ apt-get install udhcpd \
 copy_conf etc/udhcpd.conf
 sed -i -e "s/\[PI MAC ADDRESS\]/$MACADDR/" "$DESTDIR/etc/udhcpd.conf"
 systemctl enable udhcpd
-system restart udhcpd
+systemctl restart udhcpd
 
 # Change VideoCore driver to allow turning the screen off
 copy_conf boot/config.txt 755
