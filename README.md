@@ -7,6 +7,10 @@ If you want to try installation scripts anyway, you must edit them both and chan
 # Using a Raspberry Pi to add a second HDMI port to a laptop
 
 This repository hosts configuration files from [the technical write-up on my blog](https://pierre-couy.dev/tinkering/2023/03/turning-rpi-into-external-monitor-driver.html).
+By following the instructions below, you will be able to extend the display of a Linux computer through an ethernet port and a Raspberry Pi. 
+It uses an `xrandr` wrapper to launch the right `ffmpeg` command when needed and stream a virtual monitor to the Raspberry Pi. 
+Once configured, the Raspberry Pi does not need input devices nor Wi-Fi, will handle network configuration on the host computer using a dhcp server, and will put the display to sleep and wake it up as needed. 
+À lot more details are available in the blog post. 
 
 Additionally, I tried to write install scripts for both the laptop and the Raspberry Pi. This should be the quickest way to get everything up and running. After installing all dependencies and configuration files, you should be able to get a low-latency stream with good quality from your main computer to the Raspberry Pi.
 
