@@ -25,7 +25,7 @@ if [ $(echo $V_ARGS | grep -e "--off" | wc -l) -ge 1 ]; then
     echo "Screen off" >> ~/testxrandr # For debugging
 else
     # Extract the arguments for the display we're interested in
-    MODE=$(echo $V_ARGS | sed -e 's/.*--mode \([^ ]*\).*/\1/')
+    MODE=$(echo $V_ARGS | sed -e 's/.*--mode \([^ _]*\).*/\1/')
     POS=$(echo $V_ARGS | sed -e 's/.*--pos \([^ ]*\).*/\1/')
     ROTATE=$(echo $V_ARGS | sed -e 's/.*--rotate \([^ ]*\).*/\1/')
 
