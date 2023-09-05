@@ -7,7 +7,7 @@ set -m
 V_ARGS=$(echo "$@" | grep "VIRTUAL1" | sed -e 's/.*--output VIRTUAL1 //' -e 's/ \?--output.*//')
 
 # Run the real xrandr 
-ORIG_XRANDR=$(which -a xrandr | head -n 2 | tail -n 1)
+ORIG_XRANDR=$(which -a xrandr | uniq | head -n 2 | tail -n 1)
 $ORIG_XRANDR "$@"
 
 # If xrandr exited with an error, exit with the same exit code
