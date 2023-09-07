@@ -64,7 +64,7 @@ if [ ! -f "$DESTDIR/$HOME/.local/bin/xrandr" ]; then
 fi
 
 # Check and add ~/.local/bin to $PATH
-echo $PATH | grep "$DESTDIR/$HOME/\.local/bin" > /dev/null
+echo $PATH | grep "$HOME/\.local/bin" > /dev/null
 if [ $? -eq 1 ]; then
     echo "Adding \$HOME/.local/bin to \$PATH"
     echo "You will need to log out and back in for it to work"
